@@ -27,6 +27,7 @@ bosh target BOSH_HOST
 git clone https://github.com/cloudfoundry-community/broker-registrar-boshrelease.git
 cd broker-registrar-boshrelease
 bosh upload release releases/broker-registrar-1.yml
+```
 
 ## Registering/Deregistering brokers
 
