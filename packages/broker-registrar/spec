@@ -1,0 +1,6 @@
+---
+name: broker-registrar
+dependencies:
+- ruby
+files:
+- broker-registrar/**/*
