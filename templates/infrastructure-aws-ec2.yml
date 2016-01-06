@@ -9,7 +9,11 @@ meta:
     version: latest
 
 jobs:
-  - name: just_install_packages
+  - name: broker-registrar
+    networks:
+      - name: broker_registrar1
+    persistent_disk: (( grab meta.persistent_disk ))
+  - name: broker-deregistrar
     networks:
       - name: broker_registrar1
     persistent_disk: (( grab meta.persistent_disk ))
