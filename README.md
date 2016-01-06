@@ -1,54 +1,39 @@
 # BOSH Release for broker-registrar
 
+The `broker-registrar-boshrelease` is a BOSH release aimed at providing a generic errands
+for registering CloudFoundry service brokers via `broker-registrar` and `broker-deregistrar`
+errands. While it can be deployed as a standalone deployment, it gains most power from being
+added to existing service deployments, to provide a consistent way of registering/deregistering
+service brokers.
+
 ## Usage
 
-To use this bosh release, first upload it to your bosh:
+The standard `templates/make_manifest` script can be used to create a generic
+BOSH manifest. If you wish to colocate this release on another deployment,
+simply include the content of `templates/jobs.yml` in your [spruce](https://github.com/geofffranks/spruce)
+templates for your bosh manifest, and fill out the required parameters
+
+Don't forget to upload the bosh release!
 
 ```
+# Grab from bosh.io
+bosh upload release https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease
+
+# Or alternatively, do it manually
 bosh target BOSH_HOST
 git clone https://github.com/cloudfoundry-community/broker-registrar-boshrelease.git
 cd broker-registrar-boshrelease
 bosh upload release releases/broker-registrar-1.yml
-```
 
-For [bosh-lite](https://github.com/cloudfoundry/bosh-lite), you can quickly create a deployment manifest & deploy a cluster:
+## Registering/Deregistering brokers
 
-```
-templates/make_manifest warden
-bosh -n deploy
-```
+Once this release has been deployed, you can use `bosh run errand broker-registrar`
+and `bosh run errand broker-deregistrar to register + deregister the service broker.
 
-For AWS EC2, create a single VM:
-
-```
-templates/make_manifest aws-ec2
-bosh -n deploy
-```
-
-### Override security groups
-
-For AWS & Openstack, the default deployment assumes there is a `default` security group. If you wish to use a different security group(s) then you can pass in additional configuration when running `make_manifest` above.
-
-Create a file `my-networking.yml`:
-
-``` yaml
----
-networks:
-  - name: broker-registrar1
-    type: dynamic
-    cloud_properties:
-      security_groups:
-        - broker-registrar
-```
-
-Where `- broker-registrar` means you wish to use an existing security group called `broker-registrar`.
-
-You now suffix this file path to the `make_manifest` command:
-
-```
-templates/make_manifest openstack-nova my-networking.yml
-bosh -n deploy
-```
+**CAUTION!!!** The `broker-deregistrar` job will issue a purge-service-offering command
+to CloudFoundry, deleting all instances of services, app bindings, services, and broker data.
+Only use it if you really mean it. If you need to update a service broker from a new URL or
+with new data, use the `broker-registrar` job, as it is capable of safely updating brokers.
 
 ### Development
 
@@ -58,19 +43,8 @@ As a developer of this release, create new releases and upload them:
 bosh create release --force && bosh -n upload release
 ```
 
-### Final releases
-
 To share final releases:
 
 ```
 bosh create release --final
 ```
-
-By default the version number will be bumped to the next major number. You can specify alternate versions:
-
-
-```
-bosh create release --final --version 2.1
-```
-
-After the first release you need to contact [Dmitriy Kalinin](mailto://dkalinin@pivotal.io) to request your project is added to https://bosh.io/releases (as mentioned in README above).
