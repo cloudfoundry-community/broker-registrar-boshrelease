@@ -1,0 +1,30 @@
+---
+packages:
+- name: broker-registrar
+  version: 46213225d775263932e072a461e524baf0994967
+  fingerprint: 46213225d775263932e072a461e524baf0994967
+  sha1: 9bc6a6b04add3ce728bac0281dcc97df9b11732d
+  dependencies:
+  - ruby
+- name: ruby
+  version: 3806993d2569cfc8327d742f1938fe876ac0b50a
+  fingerprint: 3806993d2569cfc8327d742f1938fe876ac0b50a
+  sha1: f5899cf86835aa8e9a16f9d53040ad68abc1fca0
+  dependencies: []
+jobs:
+- name: broker-deregistrar
+  version: 30015fee8a0532ac7e5b72080dca95e85b810eda
+  fingerprint: 30015fee8a0532ac7e5b72080dca95e85b810eda
+  sha1: 354b9b89f81eca25a5ad153985b70fb90bb874db
+- name: broker-registrar
+  version: 9f566e65b9c68b62521b77ea3105afe9f654396b
+  fingerprint: 9f566e65b9c68b62521b77ea3105afe9f654396b
+  sha1: cfd83ea929a2210327b475e33a49fb8d30eb66ed
+license:
+  version: a11dc44d2ff75b964daf257650268340e4c5ba39
+  fingerprint: a11dc44d2ff75b964daf257650268340e4c5ba39
+  sha1: ac51afc6acc642e3bd3a50b8c568dc8f3a430ea2
+commit_hash: b4336774
+uncommitted_changes: true
+name: broker-registrar
+version: '1'
