@@ -1,8 +1,0 @@
-set -e # exit immediately if a simple command exits with a non-zero status
-set -u # report the usage of uninitialized variables
-
-(
-  cd ${BUILD_DIR}/broker-registrar
-  bundle package --all
-  rm -rf .rspec .ruby-gemset .ruby-version spec
-)
