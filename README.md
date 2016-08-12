@@ -6,9 +6,6 @@ errands. While it can be deployed as a standalone deployment, it gains most powe
 added to existing service deployments, to provide a consistent way of registering/deregistering
 service brokers.
 
-It leverages the [broker-registrar](https://github.com/pivotal-cf/broker-registrar) code for
-handling the CloudFoundry communication, and is based almost entirely off the errands included in [docker-boshrelease](https://github.com/cloudfoundry-community/docker-boshrelease).
-
 ## Usage
 
 The standard `templates/make_manifest` script can be used to create a generic

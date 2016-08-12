@@ -1,8 +1,7 @@
 ---
 name: broker-registrar
 packages:
-- ruby
-- broker-registrar
+- cf-cli
 templates:
   errand.sh.erb: bin/run
 properties:
@@ -12,6 +11,9 @@ properties:
     description: 'Username of the admin user'
   cf.admin_password:
     description: 'Password of the admin user'
+  cf.skip_ssl_validation:
+    description: 'Skip SSL validation when connecting to Cloud Foundry API'
+    default: false
   broker.name:
     description: 'Name of the service broker'
   broker.protocol:
