@@ -16,6 +16,8 @@ properties:
     default: false
   broker.name:
     description: 'Name of the service broker'
+  broker.services:
+    description: 'A list of services to be enabled for all organizations. When not configured, only the service is enabled which is named like the broker (if no such service exists the errand fails).'
   broker.protocol:
     description: 'Protocol (http/https) provided to the Cloud Controller when registering/deregistering the broker'
     default: https

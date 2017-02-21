@@ -44,4 +44,6 @@ cf auth \
 # Create broker or update if exists
 createServiceBroker || updateServiceBroker
 
-cf enable-service-access ${BROKER_NAME}
+<% p("broker.services", ["${BROKER_NAME}"]).each do |service| %>
+cf enable-service-access <%= service %>
+<% end %>
