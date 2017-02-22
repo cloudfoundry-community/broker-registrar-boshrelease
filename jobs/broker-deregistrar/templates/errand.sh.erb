@@ -26,9 +26,11 @@ cf auth \
   ${CF_ADMIN_USERNAME} \
   ${CF_ADMIN_PASSWORD}
 
+<% p("broker.services", ["${BROKER_NAME}"]).each do |service| %>
 cf purge-service-offering \
-  ${BROKER_NAME} \
+   <%= service %> \
   -f
+<% end %>
 
 cf delete-service-broker \
   ${BROKER_NAME} \
