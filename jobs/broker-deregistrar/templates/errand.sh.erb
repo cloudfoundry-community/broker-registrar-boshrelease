@@ -2,12 +2,14 @@
 
 set -eu
 
-CF_API_URL='<%= p("cf.api_url") %>'
-CF_ADMIN_USERNAME='<%= p("cf.admin_username") %>'
-CF_ADMIN_PASSWORD='<%= p("cf.admin_password") %>'
-CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
+<% cf = link("cf") -%>
+CF_API_URL='<%= cf.p("cf.api_url") %>'
+CF_ADMIN_USERNAME='<%= cf.p("cf.username") %>'
+CF_ADMIN_PASSWORD='<%= cf.p("cf.password") %>'
+CF_SKIP_SSL_VALIDATION='<%= cf.p("cf.skip_ssl_validation") %>'
 
-BROKER_NAME='<%= p("broker.name") %>'
+<% broker = link("servicebroker") -%>
+BROKER_NAME='<%= broker.p("name") %>'
 
 echo "CF_API_URL=${CF_API_URL}"
 echo "CF_SKIP_SSL_VALIDATION=${CF_SKIP_SSL_VALIDATION}"
@@ -26,11 +28,10 @@ cf auth \
   ${CF_ADMIN_USERNAME} \
   ${CF_ADMIN_PASSWORD}
 
-<% p("broker.services", ["${BROKER_NAME}"]).each do |service| %>
-cf purge-service-offering \
-   <%= service %> \
-  -f
-<% end %>
+# broker.p("services") is a JSON array from servicebroker link
+<% broker.p("services").each do |service| -%>
+cf purge-service-offering <%= service[:name] %> -f
+<% end -%>
 
 cf delete-service-broker \
   ${BROKER_NAME} \

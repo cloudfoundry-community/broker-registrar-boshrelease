@@ -3,22 +3,23 @@
 set -eu
 
 CF_API_URL='<%= p("cf.api_url") %>'
-CF_ADMIN_USERNAME='<%= p("cf.admin_username") %>'
-CF_ADMIN_PASSWORD='<%= p("cf.admin_password") %>'
+CF_ADMIN_USERNAME='<%= p("cf.username") %>'
+CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
 CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
 
-BROKER_NAME='<%= p("broker.name") %>'
-BROKER_URL='<%= p("broker.protocol") %>://<%= p("broker.host") %>:<%= p("broker.port") %>'
-BROKER_USERNAME='<%= p("broker.username") %>'
-BROKER_PASSWORD='<%= p("broker.password") %>'
+<% broker = link("servicebroker") -%>
+BROKER_NAME='<%= broker.p("name") %>'
+BROKER_URL='<%= broker.p("protocol", "http") %>://<%= broker.p("external_host", broker.instances.first.address) %>:<%= broker.p("port") %>'
+BROKER_USERNAME='<%= broker.p("username") %>'
+BROKER_PASSWORD='<%= broker.p("password") %>'
 
 function updateServiceBroker() {
-  echo "Service broker already exists - updating broker"
+  echo "Service broker '${BROKER_NAME}' already exists - updating broker"
   cf update-service-broker ${BROKER_NAME} ${BROKER_USERNAME} ${BROKER_PASSWORD} ${BROKER_URL}
 }
 
-function createServiceBroker(){
-  echo "Service broker does not exist - creating broker"
+function createServiceBroker() {
+  echo "Service broker '${BROKER_NAME}' does not exist - creating broker"
   cf create-service-broker ${BROKER_NAME} ${BROKER_USERNAME} ${BROKER_PASSWORD} ${BROKER_URL}
 }
 
@@ -44,6 +45,7 @@ cf auth \
 # Create broker or update if exists
 createServiceBroker || updateServiceBroker
 
-<% p("broker.services", ["${BROKER_NAME}"]).each do |service| %>
-cf enable-service-access <%= service %>
-<% end %>
+# broker.p("services") is a JSON array from servicebroker link
+<% broker.p("services").each do |service| -%>
+cf enable-service-access <%= service[:name] %>
+<% end -%>
