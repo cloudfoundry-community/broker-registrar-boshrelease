@@ -7,9 +7,14 @@ CF_ADMIN_USERNAME='<%= p("cf.username") %>'
 CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
 CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
 
-<% broker = link("servicebroker") -%>
+<%
+  broker = link("servicebroker")
+  external_host = broker.p("external_host", "#{broker.instances.first.address}:#{broker.p("port")}")
+  protocol      = broker.p("protocol", broker.p("ssl_enabled", false) ? "https" : "http")
+  external_url  = "#{protocol}://#{external_host}"
+-%>
 BROKER_NAME='<%= broker.p("name") %>'
-BROKER_URL='<%= broker.p("protocol", "http") %>://<%= broker.p("external_host", broker.instances.first.address) %>:<%= broker.p("port") %>'
+BROKER_URL='<%= external_url %>'
 BROKER_USERNAME='<%= broker.p("username") %>'
 BROKER_PASSWORD='<%= broker.p("password") %>'
 
