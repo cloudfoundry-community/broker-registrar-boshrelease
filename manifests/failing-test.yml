@@ -1,0 +1,71 @@
+---
+name: broker-registrar-demo
+
+instance_groups:
+- name: broker-registrar
+  instances: 1
+  azs: [z1]
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-registrar
+    release: broker-registrar
+    consumes:
+      servicebroker:
+        instances: []
+        properties:
+          username: x
+          password: x
+          ssl_enabled: false
+          port: 6000
+          external_host: x
+          name: x
+          services: []
+
+    properties:
+      cf:
+        api_url: xxx
+        username: xxx
+        password: xxx
+        skip_ssl_validation: xxx
+
+
+- name: broker-deregistrar
+  instances: 1
+  azs: [z1]
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-deregistrar
+    release: broker-registrar
+    consumes:
+      servicebroker:
+        instances: []
+        properties:
+          username: x
+          password: x
+          ssl_enabled: false
+          port: 6000
+          external_host: x
+          name: x
+          services: []
+
+releases:
+- name: broker-registrar
+  version: latest
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+  max_in_flight: 1
+  serial: false

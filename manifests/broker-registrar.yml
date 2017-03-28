@@ -1,5 +1,5 @@
 ---
-name: broker-registrar
+name: broker-registrar-((servicebroker_deployment))
 
 instance_groups:
 - name: broker-registrar
@@ -14,6 +14,7 @@ instance_groups:
     release: broker-registrar
     consumes:
       servicebroker:
+        from: servicebroker
         deployment: ((servicebroker_deployment))
     properties:
       cf:
@@ -22,20 +23,36 @@ instance_groups:
         password: ((cf_admin_password))
         skip_ssl_validation: ((cf_skip_ssl_validation))
 
-- name: broker-deregistrar
-  instances: 1
-  azs: [z1]
-  lifecycle: errand
-  vm_type: default
-  stemcell: default
-  networks: [{name: default}]
-  jobs:
-  - name: broker-deregistrar
-    release: broker-registrar
+# - name: broker-deregistrar
+#   instances: 1
+#   azs: [z1]
+#   lifecycle: errand
+#   vm_type: default
+#   stemcell: default
+#   networks: [{name: default}]
+#   jobs:
+#   - name: broker-deregistrar
+#     release: broker-registrar
+#     consumes:
+#       servicebroker:
+#         from: servicebroker
+#         deployment: ((servicebroker_deployment))
 
 releases:
-  name: broker-registrar
+- name: broker-registrar
   version: latest
   # version: 2.0.0
   # url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=2.0.0
   # sha1: 83b61f06e43c27845deb59597504e55ee887897e
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+  max_in_flight: 1
+  serial: false

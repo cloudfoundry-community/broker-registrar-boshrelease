@@ -13,12 +13,14 @@ There are two common use cases for this BOSH release:
 ## Standalone deployment
 
 ```
+export BROKER_DEPLOYMENT=docker-broker
+export BOSH_DEPLOYMENT=broker-registrar-$BROKER_DEPLOYMENT
 bosh2 deploy manifests/broker-registrar.yml \
+  -v servicebroker_deployment=$BROKER_DEPLOYMENT \
   -v cf_api_url=... \
   -v cf_skip_ssl_validation=false \
   -v cf_admin_username=admin \
-  -v cf_admin_password=... \
-  -v servicebroker_deployment=docker-broker
+  -v cf_admin_password=...
 ```
 
 ## Collocated deployment
