@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -eu
-
+(
 CF_API_URL='<%= p("cf.api_url") %>'
 CF_ADMIN_USERNAME='<%= p("cf.username") %>'
 CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
@@ -47,10 +47,16 @@ cf auth \
   ${CF_ADMIN_USERNAME} \
   ${CF_ADMIN_PASSWORD}
 
+set -x
+
 # Create broker or update if exists
 createServiceBroker || updateServiceBroker
 
+cf service-access
+
 # broker.p("services") is a JSON array from servicebroker link
 <% broker.p("services").each do |service| -%>
-cf enable-service-access <%= service[:name] %>
+cf enable-service-access "<%= service['name'] %>"
 <% end -%>
+
+) 2>&1

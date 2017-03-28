@@ -2,6 +2,7 @@
 
 set -eu
 
+(
 <% cf = link("cf") -%>
 CF_API_URL='<%= cf.p("cf.api_url") %>'
 CF_ADMIN_USERNAME='<%= cf.p("cf.username") %>'
@@ -30,9 +31,10 @@ cf auth \
 
 # broker.p("services") is a JSON array from servicebroker link
 <% broker.p("services").each do |service| -%>
-cf purge-service-offering <%= service[:name] %> -f
+cf purge-service-offering <%= service["name"] %> -f
 <% end -%>
 
 cf delete-service-broker \
   ${BROKER_NAME} \
   -f
+) 2>&1
