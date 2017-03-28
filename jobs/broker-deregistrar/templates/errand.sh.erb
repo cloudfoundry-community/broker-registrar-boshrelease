@@ -1,8 +1,12 @@
 #!/bin/bash
 
+exec 2>&1
+
+export PATH=$PATH:/var/vcap/packages/jq/bin
+export PATH=$PATH:/var/vcap/packages/cf-cli/bin
+
 set -eu
 
-(
 <% cf = link("cf") -%>
 CF_API_URL='<%= cf.p("cf.api_url") %>'
 CF_ADMIN_USERNAME='<%= cf.p("cf.username") %>'
@@ -16,8 +20,6 @@ echo "CF_API_URL=${CF_API_URL}"
 echo "CF_SKIP_SSL_VALIDATION=${CF_SKIP_SSL_VALIDATION}"
 echo "CF_ADMIN_USERNAME=${CF_ADMIN_USERNAME}"
 echo "BROKER_NAME=${BROKER_NAME}"
-
-export PATH=/var/vcap/packages/cf-cli/bin
 
 if [[ ${CF_SKIP_SSL_VALIDATION} == "true" ]]; then
   cf api ${CF_API_URL} --skip-ssl-validation
@@ -37,4 +39,3 @@ cf purge-service-offering <%= service["name"] %> -f
 cf delete-service-broker \
   ${BROKER_NAME} \
   -f
-) 2>&1

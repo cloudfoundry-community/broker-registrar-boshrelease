@@ -2,6 +2,7 @@
 name: broker-registrar
 packages:
 - cf-cli
+- jq
 templates:
   errand.sh.erb: bin/run
 

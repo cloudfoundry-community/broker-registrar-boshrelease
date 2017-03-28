@@ -1,7 +1,12 @@
 #!/bin/bash
 
+exec 2>&1
+
+export PATH=$PATH:/var/vcap/packages/jq/bin
+export PATH=$PATH:/var/vcap/packages/cf-cli/bin
+
 set -eu
-(
+
 CF_API_URL='<%= p("cf.api_url") %>'
 CF_ADMIN_USERNAME='<%= p("cf.username") %>'
 CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
@@ -18,17 +23,15 @@ BROKER_URL='<%= external_url %>'
 BROKER_USERNAME='<%= broker.p("username") %>'
 BROKER_PASSWORD='<%= broker.p("password") %>'
 
-function updateServiceBroker() {
-  echo "Service broker '${BROKER_NAME}' already exists - updating broker"
-  cf update-service-broker ${BROKER_NAME} ${BROKER_USERNAME} ${BROKER_PASSWORD} ${BROKER_URL}
+function createOrUpdateServiceBroker() {
+  if [[ "$(cf curl /v2/service_brokers\?q=name:${BROKER_NAME} | jq -r .total_results)" == "0" ]]; then
+    echo "Service broker '${BROKER_NAME}' does not exist - creating broker"
+    cf create-service-broker ${BROKER_NAME} ${BROKER_USERNAME} ${BROKER_PASSWORD} ${BROKER_URL}
+  else
+    echo "Service broker '${BROKER_NAME}' already exists - updating broker"
+    cf update-service-broker ${BROKER_NAME} ${BROKER_USERNAME} ${BROKER_PASSWORD} ${BROKER_URL}
+  fi
 }
-
-function createServiceBroker() {
-  echo "Service broker '${BROKER_NAME}' does not exist - creating broker"
-  cf create-service-broker ${BROKER_NAME} ${BROKER_USERNAME} ${BROKER_PASSWORD} ${BROKER_URL}
-}
-
-export PATH=/var/vcap/packages/cf-cli/bin
 
 echo "CF_API_URL=${CF_API_URL}"
 echo "CF_SKIP_SSL_VALIDATION=${CF_SKIP_SSL_VALIDATION}"
@@ -47,10 +50,7 @@ cf auth \
   ${CF_ADMIN_USERNAME} \
   ${CF_ADMIN_PASSWORD}
 
-set -x
-
-# Create broker or update if exists
-createServiceBroker || updateServiceBroker
+createOrUpdateServiceBroker
 
 cf service-access
 
@@ -58,5 +58,3 @@ cf service-access
 <% broker.p("services").each do |service| -%>
 cf enable-service-access "<%= service['name'] %>"
 <% end -%>
-
-) 2>&1
