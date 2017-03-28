@@ -13,6 +13,11 @@ consumes:
 provides:
 - name: cf
   type: cf_user
+  properties:
+  - cf.api_url
+  - cf.username
+  - cf.password
+  - cf.skip_ssl_validation
 
 properties:
   cf.api_url:
