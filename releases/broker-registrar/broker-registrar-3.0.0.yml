@@ -1,0 +1,28 @@
+name: broker-registrar
+version: 3.0.0
+commit_hash: 798f6b3
+uncommitted_changes: false
+jobs:
+- name: broker-deregistrar
+  version: 4f19d394ca91da0f5f231349df404fd8f16f22a5
+  fingerprint: 4f19d394ca91da0f5f231349df404fd8f16f22a5
+  sha1: 12057507f70e83405cad9070eaef657adbab2952
+- name: broker-registrar
+  version: 48e9593de337bd8042b34750830ec816d507ff33
+  fingerprint: 48e9593de337bd8042b34750830ec816d507ff33
+  sha1: ed153629cf03a368054fed84a8688035ed80faea
+packages:
+- name: cf-cli
+  version: e0e28f73e7205d90e5e0970c00fa714a0374d288
+  fingerprint: e0e28f73e7205d90e5e0970c00fa714a0374d288
+  sha1: 7757ffb8083d26144a6db7f036669e2707a6297a
+  dependencies: []
+- name: jq
+  version: f502bfc65e67f129d21866f86e68f8458bd0ae28
+  fingerprint: f502bfc65e67f129d21866f86e68f8458bd0ae28
+  sha1: 26c1f33a5539ea414c9056182f96abe976101ec7
+  dependencies: []
+license:
+  version: a11dc44d2ff75b964daf257650268340e4c5ba39
+  fingerprint: a11dc44d2ff75b964daf257650268340e4c5ba39
+  sha1: ac51afc6acc642e3bd3a50b8c568dc8f3a430ea2
