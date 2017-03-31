@@ -3,7 +3,7 @@ name: broker-deregistrar
 packages:
 - cf-cli
 templates:
-  errand.sh.erb: bin/run
+  run.sh: bin/run
 
 consumes:
 - name: servicebroker

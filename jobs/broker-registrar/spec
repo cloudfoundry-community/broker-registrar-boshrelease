@@ -4,7 +4,7 @@ packages:
 - cf-cli
 - jq
 templates:
-  errand.sh.erb: bin/run
+  run.sh: bin/run
 
 consumes:
 - name: servicebroker
