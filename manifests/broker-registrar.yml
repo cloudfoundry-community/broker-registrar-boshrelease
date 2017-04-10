@@ -23,20 +23,26 @@ instance_groups:
         password: ((cf_admin_password))
         skip_ssl_validation: ((cf_skip_ssl_validation))
 
-# - name: broker-deregistrar
-#   instances: 1
-#   azs: [z1]
-#   lifecycle: errand
-#   vm_type: default
-#   stemcell: default
-#   networks: [{name: default}]
-#   jobs:
-#   - name: broker-deregistrar
-#     release: broker-registrar
-#     consumes:
-#       servicebroker:
-#         from: servicebroker
-#         deployment: ((servicebroker_deployment))
+- name: broker-deregistrar
+  instances: 1
+  azs: [z1]
+  lifecycle: errand
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: broker-deregistrar
+    release: broker-registrar
+    consumes:
+      servicebroker:
+        from: servicebroker
+        deployment: ((servicebroker_deployment))
+    properties:
+      cf:
+        api_url: ((cf_api_url))
+        username: ((cf_admin_username))
+        password: ((cf_admin_password))
+        skip_ssl_validation: ((cf_skip_ssl_validation))
 
 releases:
 - name: broker-registrar

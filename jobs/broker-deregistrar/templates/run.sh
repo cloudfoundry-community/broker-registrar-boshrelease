@@ -7,11 +7,10 @@ export PATH=$PATH:/var/vcap/packages/cf-cli/bin
 
 set -eu
 
-<% cf = link("cf") -%>
-CF_API_URL='<%= cf.p("cf.api_url") %>'
-CF_ADMIN_USERNAME='<%= cf.p("cf.username") %>'
-CF_ADMIN_PASSWORD='<%= cf.p("cf.password") %>'
-CF_SKIP_SSL_VALIDATION='<%= cf.p("cf.skip_ssl_validation") %>'
+CF_API_URL='<%= p("cf.api_url") %>'
+CF_ADMIN_USERNAME='<%= p("cf.username") %>'
+CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
+CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
 
 <% broker = link("servicebroker") -%>
 BROKER_NAME='<%= broker.p("name") %>'
