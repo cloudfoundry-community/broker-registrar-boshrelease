@@ -54,7 +54,7 @@ createOrUpdateServiceBroker
 
 cf service-access
 
-service_names=$(curl -s -u ${BROKER_USERNAME}:${BROKER_PASSWORD} ${BROKER_URL}/v2/catalog | jq -r ".services[].name")
+service_names=($(curl -s -u ${BROKER_USERNAME}:${BROKER_PASSWORD} ${BROKER_URL}/v2/catalog | jq -r ".services[].name"))
 for service_name in "${service_names[@]}"; do
   cf enable-service-access $service_name
 done
