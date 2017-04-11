@@ -7,6 +7,8 @@ builds:
     version: 3.1.1
   be5d9042-a46e-45d8-5d68-3aaf1ae06e21:
     version: 3.0.0
+  d666266c-2a6c-4361-46b8-ff1e6c2d993c:
+    version: 3.1.2
   f9ab3bf5-f0b1-4583-ae2f-aedf66d66452:
     version: 2.0.0
 format-version: "2"
