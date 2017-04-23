@@ -20,3 +20,6 @@ properties:
   cf.skip_ssl_validation:
     description: 'Skip SSL validation when connecting to Cloud Foundry API'
     default: false
+
+  catalog_version:
+    description: Force --when-changed by specifying a new version value
