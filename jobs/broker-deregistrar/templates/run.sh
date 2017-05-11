@@ -12,8 +12,14 @@ CF_ADMIN_USERNAME='<%= p("cf.username") %>'
 CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
 CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
 
-<% broker = link("servicebroker") -%>
-BROKER_NAME='<%= broker.p("name") %>'
+<%
+  broker_name = p("servicebroker.name", nil)
+  unless broker_name
+    broker = link("servicebroker")
+    broker_name = broker.p("name")
+  end
+-%>
+BROKER_NAME='<%= broker_name %>'
 
 echo "CF_API_URL=${CF_API_URL}"
 echo "CF_SKIP_SSL_VALIDATION=${CF_SKIP_SSL_VALIDATION}"
@@ -30,10 +36,12 @@ cf auth \
   ${CF_ADMIN_USERNAME} \
   ${CF_ADMIN_PASSWORD}
 
-# broker.p("services") is a JSON array from servicebroker link
-<% broker.p("services").each do |service| -%>
-cf purge-service-offering <%= service["name"] %> -f
-<% end -%>
+BROKER_GUID=$(cf curl /v2/service_brokers\?q=name:${BROKER_NAME} | jq -r ".resources[0].metadata.guid")
+SERVICE_NAMES=($(cf curl /v2/services\?q=service_broker_guid:${BROKER_GUID} | jq -r ".resources[].entity.label"))
+
+for service_name in "${SERVICE_NAMES[@]}"; do
+  cf purge-service-offering $service_name -f
+done
 
 cf delete-service-broker \
   ${BROKER_NAME} \

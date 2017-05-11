@@ -3,6 +3,7 @@ name: broker-registrar
 packages:
 - cf-cli
 - jq
+
 templates:
   run.sh: bin/run
 

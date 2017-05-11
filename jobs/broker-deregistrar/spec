@@ -2,6 +2,7 @@
 name: broker-deregistrar
 packages:
 - cf-cli
+- jq
 
 templates:
   run.sh: bin/run
@@ -12,6 +13,9 @@ consumes:
   optional: true
 
 properties:
+  servicebroker.name:
+    description: 'Name of broker when deregistering'
+
   cf.api_url:
     description: 'Full URL of Cloud Foundry API'
   cf.username:
