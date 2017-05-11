@@ -13,15 +13,24 @@ CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
 CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
 
 <%
-  broker = link("servicebroker")
-  external_host = broker.p("external_host", "#{broker.instances.first.address}:#{broker.p("port")}")
-  protocol      = broker.p("protocol", broker.p("ssl_enabled", false) ? "https" : "http")
-  external_url  = "#{protocol}://#{external_host}"
+  broker_url = p("servicebroker.url", nil)
+  broker_name = p("servicebroker.name", nil)
+  broker_username = p("servicebroker.username", nil)
+  broker_password = p("servicebroker.password", nil)
+  unless broker_url
+    broker = link("servicebroker")
+    external_host = broker.p("external_host", "#{broker.instances.first.address}:#{broker.p("port")}")
+    protocol      = broker.p("protocol", broker.p("ssl_enabled", false) ? "https" : "http")
+    broker_url  = "#{protocol}://#{external_host}"
+    broker_name = broker.p("name")
+    broker_username = broker.p("username")
+    broker_password = broker.p("password")
+  end
 -%>
-BROKER_NAME='<%= broker.p("name") %>'
-BROKER_URL='<%= external_url %>'
-BROKER_USERNAME='<%= broker.p("username") %>'
-BROKER_PASSWORD='<%= broker.p("password") %>'
+BROKER_NAME='<%= broker_name %>'
+BROKER_URL='<%= broker_url %>'
+BROKER_USERNAME='<%= broker_username %>'
+BROKER_PASSWORD='<%= broker_password %>'
 
 function createOrUpdateServiceBroker() {
   if [[ "$(cf curl /v2/service_brokers\?q=name:${BROKER_NAME} | jq -r .total_results)" == "0" ]]; then

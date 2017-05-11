@@ -9,8 +9,19 @@ templates:
 consumes:
 - name: servicebroker
   type: servicebroker
+  optional: true
 
 properties:
+  servicebroker.url:
+    description: 'URL of broker to register'
+    example: https://my-broker.system.domain
+  servicebroker.name:
+    description: 'Name of broker when registering/deregistering'
+  servicebroker.username:
+    description: 'Basic auth username of broker API'
+  servicebroker.password:
+    description: 'Basic auth password of broker API'
+
   cf.api_url:
     description: 'Full URL of Cloud Foundry API'
   cf.username:
