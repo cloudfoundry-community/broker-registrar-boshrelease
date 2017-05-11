@@ -46,9 +46,9 @@ instance_groups:
 
 releases:
 - name: broker-registrar
-  version: 3.0.0
-  url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.0.0
-  sha1: d6486bfe6c76b612ab6e0c2d3e38376ad780f378
+  version: 3.2.0
+  url: https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease?v=3.2.0
+  sha1: c3c816470e32d6957fcda1b19c1647ff9acba8e2
 
 stemcells:
 - alias: default
