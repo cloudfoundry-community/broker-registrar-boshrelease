@@ -17,10 +17,10 @@ export BROKER_DEPLOYMENT=docker-broker
 export BOSH_DEPLOYMENT=broker-registrar-$BROKER_DEPLOYMENT
 bosh2 deploy manifests/broker-registrar.yml \
   -v servicebroker_deployment=$BROKER_DEPLOYMENT \
-  -v cf_api_url=... \
-  -v cf_skip_ssl_validation=false \
-  -v cf_admin_username=admin \
-  -v cf_admin_password=...
+  -v cf-api-url=... \
+  -v cf-skip-ssl-validation=false \
+  -v cf-admin-username=admin \
+  -v cf-admin-password=...
 ```
 
 This standalone deployment will require that the targeted deployment (e.g. `docker-broker` in example above) is sharing its `servicebroker` link. This is done in its own deployment manifest.
@@ -54,10 +54,10 @@ For example, within your broker's release repo:
 ```
 bosh2 deploy manifests/my-broker.yml \
   -o ../broker-registrar-boshrelease/manifests/op-add-errands.yml
-  -v cf_api_url=... \
-  -v cf_admin_username=... \
-  -v cf_admin_password=... \
-  -v cf_skip_ssl_validation=...
+  -v cf-api-url=... \
+  -v cf-skip-ssl-validation=false \
+  -v cf-admin-username=admin \
+  -v cf-admin-password=...
 ```
 
 Alternately, copy/rename `op-add-errands.yml` into the broker's `manifests/` folder for its convenience.
