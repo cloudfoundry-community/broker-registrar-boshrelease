@@ -18,7 +18,7 @@ CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
     broker = link("servicebroker")
     broker_name = broker.p("name")
   end
--%>
+%>
 BROKER_NAME='<%= broker_name %>'
 
 echo "CF_API_URL=${CF_API_URL}"
