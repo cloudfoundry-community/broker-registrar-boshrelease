@@ -26,7 +26,7 @@ CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
     broker_username = broker.p("username")
     broker_password = broker.p("password")
   end
--%>
+%>
 BROKER_NAME='<%= broker_name %>'
 BROKER_URL='<%= broker_url %>'
 BROKER_USERNAME='<%= broker_username %>'
