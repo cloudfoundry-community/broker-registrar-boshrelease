@@ -13,15 +13,17 @@ meta:
     password: (( vault "secret/bosh-lites/lite49/users/admin:password" ))
     cacert:   (( vault "secret/bosh-lites/lite49/certs:rootCA.pem" ))
     cf:
-      deployment_name: cf
-      admin_password: (( vault "secret/bosh-lites/lite49/cf:admin_password" ))
-      system_domain: (( vault "secret/bosh-lites/lite49/cf:system_domain" ))
+      deployment_name: (( vault "secret/bosh-lites/lite49/cf:deployment_name" ))
+      api_url:         (( vault "secret/bosh-lites/lite49/cf:api_url" ))
+      admin_username:  admin
+      admin_password:  (( vault "secret/bosh-lites/lite49/cf:admin_password" ))
+      system_domain:   (( vault "secret/bosh-lites/lite49/cf:system_domain" ))
       servicebroker_deployment: testflight-docker-broker
 
   manifest:
     vars: (( concat
-      "\ncf-api-url=" meta.bosh-lite.cf.deployment_name
-      "\ncf-admin-username=adamin"
+      "\ncf-api-url=" meta.bosh-lite.cf.api_url
+      "\ncf-admin-username=" meta.bosh-lite.cf.admin_username
       "\ncf-admin-password=" meta.bosh-lite.cf.admin_password
       "\ncf-skip-ssl-validation=true"
       "\nservicebroker-deployment=" meta.bosh-lite.cf.servicebroker_deployment ))
