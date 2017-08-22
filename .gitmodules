@@ -1,3 +1,0 @@
-[submodule "src/broker-registrar"]
-	path = src/broker-registrar
-	url = git@github.com:pivotal-cf/broker-registrar.git
