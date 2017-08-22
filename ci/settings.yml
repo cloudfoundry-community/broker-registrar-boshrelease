@@ -3,6 +3,7 @@ meta:
   name:    broker-registrar
   target:  sw
   url:     https://ci.starkandwayne.com
+  test-errands: broker-deregistrar broker-registrar broker-deregistrar broker-registrar
 
   initial_version: 3.3.0
 
@@ -15,13 +16,15 @@ meta:
       deployment_name: cf
       admin_password: (( vault "secret/bosh-lites/lite49/cf:admin_password" ))
       system_domain: (( vault "secret/bosh-lites/lite49/cf:system_domain" ))
+      servicebroker_deployment: testflight-docker-broker
 
   manifest:
     vars: (( concat
       "\ncf-api-url=" meta.bosh-lite.cf.deployment_name
       "\ncf-admin-username=adamin"
       "\ncf-admin-password=" meta.bosh-lite.cf.admin_password
-      "\ncf-skip-ssl-validation=true" ))
+      "\ncf-skip-ssl-validation=true"
+      "\nservicebroker-deployment=" meta.bosh-lite.cf.servicebroker_deployment ))
 
   aws:
     bucket: (( concat meta.name "-boshrelease" ))

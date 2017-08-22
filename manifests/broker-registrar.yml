@@ -14,7 +14,7 @@ instance_groups:
     release: broker-registrar
     consumes:
       servicebroker:
-        from: servicebroker
+        from: broker
         deployment: ((servicebroker-deployment))
     properties:
       cf:
@@ -35,7 +35,7 @@ instance_groups:
     release: broker-registrar
     consumes:
       servicebroker:
-        from: servicebroker
+        from: broker
         deployment: ((servicebroker-deployment))
     properties:
       cf:
