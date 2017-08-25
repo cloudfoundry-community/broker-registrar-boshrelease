@@ -58,6 +58,6 @@ update:
 
 releases:
 - name: broker-registrar
-  version: 3.3.0
-  url: https://github.com/cloudfoundry-community/broker-registrar-boshrelease/releases/download/v3.3.0/broker-registrar-3.3.0.tgz
-  sha1: 238831a408fcf9873d398975ba79de32d1dcb4fe
+  version: 3.3.1
+  url: https://github.com/cloudfoundry-community/broker-registrar-boshrelease/releases/download/v3.3.1/broker-registrar-3.3.1.tgz
+  sha1: c95283460a4f962cee1cacabb7333774783a24e9
