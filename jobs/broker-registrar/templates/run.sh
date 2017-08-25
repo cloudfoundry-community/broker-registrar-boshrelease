@@ -21,10 +21,10 @@ CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
     broker = link("servicebroker")
     external_host = broker.p("external_host", "#{broker.instances.first.address}:#{broker.p("port")}")
     protocol      = broker.p("protocol", broker.p("ssl_enabled", false) ? "https" : "http")
-    broker_url  = "#{protocol}://#{external_host}"
-    broker_name = broker.p("name")
-    broker_username = broker.p("username")
-    broker_password = broker.p("password")
+    broker_url  ||= "#{protocol}://#{external_host}"
+    broker_name ||= broker.p("name")
+    broker_username ||= broker.p("username")
+    broker_password ||= broker.p("password")
   end
 %>
 BROKER_NAME='<%= broker_name %>'
