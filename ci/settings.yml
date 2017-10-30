@@ -3,9 +3,13 @@ meta:
   name:    broker-registrar
   target:  sw
   url:     https://ci.starkandwayne.com
-  # test-errands: broker-deregistrar broker-registrar broker-deregistrar broker-registrar
+  test-errands: broker-deregistrar broker-registrar broker-deregistrar broker-registrar
 
   initial_version: 3.3.0
+
+  git:
+    email: (( vault "secret/ci/git:email" ))
+    name:  (( vault "secret/ci/git:name" ))
 
   bosh-lite:
     target: https://10.58.111.49:25555
