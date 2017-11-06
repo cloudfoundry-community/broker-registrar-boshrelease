@@ -11,14 +11,14 @@ service brokers.
 The basic usage is to run an errand to register/re-register a service broker:
 
 ```
-bosh2 run-errand broker-registrar
+bosh run-errand broker-registrar
 ```
 
 
 Upload the release to your BOSH:
 
 ```
-bosh2 upload-release https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease
+bosh upload-release https://bosh.io/d/github.com/cloudfoundry-community/broker-registrar-boshrelease
 ```
 
 ## Deregistering brokers

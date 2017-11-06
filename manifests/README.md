@@ -15,7 +15,7 @@ There are two common use cases for this BOSH release:
 ```
 export BROKER_DEPLOYMENT=docker-broker
 export BOSH_DEPLOYMENT=broker-registrar-$BROKER_DEPLOYMENT
-bosh2 deploy manifests/broker-registrar.yml \
+bosh deploy manifests/broker-registrar.yml \
   -v servicebroker_deployment=$BROKER_DEPLOYMENT \
   -v cf-api-url=... \
   -v cf-skip-ssl-validation=false \
@@ -47,13 +47,13 @@ This BOSH release/deployment assumes that the link is shared as `servicebroker`.
 
 ## Collocated deployment
 
-You can modify your service broker's deployment to include the two errands using the `manifests/op-add-errands.yml` operator patch file.
+You can modify your service broker's deployment to include the two errands using the `manifests/operators/add-errands.yml` operator patch file.
 
 For example, within your broker's release repo:
 
 ```
-bosh2 deploy manifests/my-broker.yml \
-  -o ../broker-registrar-boshrelease/manifests/op-add-errands.yml
+bosh deploy manifests/my-broker.yml \
+  -o ../broker-registrar-boshrelease/manifests/operators/add-errands.yml
   -v cf-api-url=... \
   -v cf-skip-ssl-validation=false \
   -v cf-admin-username=admin \
