@@ -7,10 +7,11 @@ export PATH=$PATH:/var/vcap/packages/cf-cli/bin
 
 set -eu
 
-CF_API_URL='<%= p("cf.api_url") %>'
-CF_ADMIN_USERNAME='<%= p("cf.username") %>'
-CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
-CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
+<% cf = nil; if_link("cf-admin-user") { |link| cf = link } -%>
+CF_API_URL='<%= cf ? cf.p("api_url") : p("cf.api_url") %>'
+CF_ADMIN_USERNAME='<%= cf ? cf.p("admin_username") : p("cf.username") %>'
+CF_ADMIN_PASSWORD='<%= cf ? cf.p("admin_password") : p("cf.password") %>'
+CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation", true) %>'
 
 <%
   servicebroker_name = p("servicebroker.name", nil)

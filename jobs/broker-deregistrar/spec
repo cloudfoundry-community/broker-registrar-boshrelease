@@ -11,6 +11,9 @@ consumes:
 - name: servicebroker
   type: servicebroker
   optional: true
+- name: cf-admin-user
+  type: api-user
+  optional: true
 
 properties:
   servicebroker.name:
