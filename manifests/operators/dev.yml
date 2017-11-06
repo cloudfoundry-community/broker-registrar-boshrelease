@@ -2,5 +2,5 @@
 - type: replace
   path: /releases/name=broker-registrar
   value:
-    name: docker
+    name: broker-registrar
     version: latest
