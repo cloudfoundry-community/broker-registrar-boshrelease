@@ -11,7 +11,14 @@ set -eu
 CF_API_URL='<%= cf ? cf.p("api_url") : p("cf.api_url") %>'
 CF_ADMIN_USERNAME='<%= cf ? cf.p("admin_username") : p("cf.username") %>'
 CF_ADMIN_PASSWORD='<%= cf ? cf.p("admin_password") : p("cf.password") %>'
-CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation", true) %>'
+<% if cf -%>
+mkdir -p /var/vcap/sys/run
+cat > /var/vcap/sys/run/cf.crt <<EOF
+<%= cf.p("ca_cert") %>
+EOF
+export SSL_CERT_FILE=/var/vcap/sys/run/cf.crt
+<% end -%>
+CF_SKIP_SSL_VALIDATION=<%= p("cf.skip_ssl_validation") %>
 
 <%
   broker_url = p("servicebroker.url", nil)
