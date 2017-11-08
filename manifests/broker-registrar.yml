@@ -12,11 +12,12 @@ instance_groups:
   jobs:
   - name: broker-registrar
     release: broker-registrar
-    consumes:
-      servicebroker:
-        from: broker
-        deployment: ((servicebroker-deployment))
     properties:
+      servicebroker:
+        url: https://my-broker.system.domain
+        name: mybroker
+        username: broker
+        password: broker
       cf:
         api_url: ((cf-api-url))
         username: ((cf-admin-username))
@@ -33,11 +34,9 @@ instance_groups:
   jobs:
   - name: broker-deregistrar
     release: broker-registrar
-    consumes:
-      servicebroker:
-        from: broker
-        deployment: ((servicebroker-deployment))
     properties:
+      servicebroker:
+        name: mybroker
       cf:
         api_url: ((cf-api-url))
         username: ((cf-admin-username))
