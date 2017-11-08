@@ -12,7 +12,11 @@ CF_ADMIN_USERNAME='<%= p("cf.username") %>'
 CF_ADMIN_PASSWORD='<%= p("cf.password") %>'
 CF_SKIP_SSL_VALIDATION='<%= p("cf.skip_ssl_validation") %>'
 
-BROKER_NAME='<%= p("servicebroker.name", link("servicebroker").p("name")) %>'
+<%
+  servicebroker_name = p("servicebroker.name", nil)
+  servicebroker_name ||= link("servicebroker").p("name")
+%>
+BROKER_NAME='<%= servicebroker_name %>'
 
 echo "CF_API_URL=${CF_API_URL}"
 echo "CF_SKIP_SSL_VALIDATION=${CF_SKIP_SSL_VALIDATION}"
