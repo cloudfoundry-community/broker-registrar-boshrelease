@@ -3,7 +3,8 @@ meta:
   name:    broker-registrar
   target:  sw
   url:     https://ci.starkandwayne.com
-  test-errands: broker-deregistrar broker-registrar broker-deregistrar broker-registrar
+  test-errands: ~
+  # test-errands: broker-deregistrar broker-registrar broker-deregistrar broker-registrar
 
   initial_version: 3.3.0
 
