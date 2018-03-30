@@ -1,22 +1,22 @@
 ---
 meta:
   name:    broker-registrar
-  target:  sw
-  url:     https://ci.starkandwayne.com
-  test-errands: ~
-  # test-errands: broker-deregistrar broker-registrar broker-deregistrar broker-registrar
+  target:  ohio-cf
+  url:     https://ci2.starkandwayne.com
+
+  test-errand: ~
 
   initial_version: 3.3.0
 
   git:
-    email: (( vault "secret/ci/git:email" ))
-    name:  (( vault "secret/ci/git:name" ))
+    email:  ((git-commit-email))
+    name:   ((git-commit-name))
 
   bosh-lite:
-    target: https://10.58.111.49:25555
-    username: (( vault "secret/bosh-lites/lite49/users/admin:username" ))
-    password: (( vault "secret/bosh-lites/lite49/users/admin:password" ))
-    cacert:   (( vault "secret/bosh-lites/lite49/certs:rootCA.pem" ))
+    target:   ((bosh-lite-environment))
+    cacert:   ((bosh-lite-ca-cert))
+    username: ((bosh-lite-client))
+    password: ((bosh-lite-client-secret))
     cf:
       deployment_name: (( vault "secret/bosh-lites/lite49/cf:deployment_name" ))
       api_url:         (( vault "secret/bosh-lites/lite49/cf:api_url" ))
@@ -34,21 +34,22 @@ meta:
       "\nservicebroker-deployment=" meta.bosh-lite.cf.servicebroker_deployment ))
 
   aws:
-    bucket: (( concat meta.name "-boshrelease" ))
-    access_key: (( vault "secret/aws/cfcommunity:access" ))
-    secret_key: (( vault "secret/aws/cfcommunity:secret" ))
+    bucket:      (( grab meta.pipeline ))
+    region_name: us-east-1
+    access_key:  ((aws-access-key))
+    secret_key:  ((aws-secret-key))
 
   github:
     owner:  cloudfoundry-community
-    repo:   (( concat meta.name "-boshrelease" ))
+    repo:   (( grab meta.pipeline ))
     branch: master
-    private_key:  (( vault "secret/pipelines/shared/github:private_key" ))
-    access_token: (( vault "secret/pipelines/shared/github:access_token" ))
+    private_key:  ((github-private-key))
+    access_token: ((github-access-token))
 
   slack:
-    webhook: (( vault "secret/pipelines/" meta.name "-boshrelease/slack:webhook" ))
-    channel: "#broker-registrar"
-    username:      starkandwayne-ci
-    icon:          https://www.starkandwayne.com/assets/images/shield-blue-50x50.png
-    blob_success:  '(( concat "$BUILD_PIPELINE_NAME: New version of $BUILD_JOB_NAME was detected, and updated in master. <" meta.url "/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME| Cut a new release?>" ))'
-    blob_failure:  '(( concat "$BUILD_PIPELINE_NAME: :airplane_arriving: <" meta.url "/teams/$BUILD_TEAM_NAME/pipelines/$BUILD_PIPELINE_NAME/jobs/$BUILD_JOB_NAME/builds/$BUILD_NAME| Failed to update the blob for $BUILD_JOB_NAME>" ))'
+    webhook:       ((slack-webhook))
+    username:      ((slack-username))
+    icon:          ((slack-icon-url))
+    channel:       (( concat meta.name "-boshrelease" ))
+    blob_success:  '(( concat ": New version of  was detected, and updated in master. <" meta.url "/teams//pipelines/| Cut a new release?>" ))'
+    blob_failure:  '(( concat ": :airplane_arriving: <" meta.url "/teams//pipelines//jobs//builds/| Failed to update the blob for >" ))'
