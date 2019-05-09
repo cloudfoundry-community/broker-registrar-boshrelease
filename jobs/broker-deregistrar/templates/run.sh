@@ -21,10 +21,10 @@ CF_ADMIN_USERNAME=<%= esc(cf ? cf.p("admin_username") : p("cf.username")) %>
 CF_ADMIN_PASSWORD=<%= esc(cf ? cf.p("admin_password") : p("cf.password")) %>
 <% if cf -%>
 mkdir -p /var/vcap/sys/run
-cat > /var/vcap/sys/run/cf.crt <<END_OF_CERT
+export SSL_CERT_FILE=/var/vcap/sys/run/cf.crt
+cat > "${SSL_CERT_FILE}" <<END_OF_CERT
 <%= cf.p("ca_cert") %>
 END_OF_CERT
-export SSL_CERT_FILE=/var/vcap/sys/run/cf.crt
 <% end -%>
 CF_SKIP_SSL_VALIDATION=<%= esc(p("cf.skip_ssl_validation") ? "yes" : "") %>
 
