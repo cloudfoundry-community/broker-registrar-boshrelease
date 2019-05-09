@@ -26,7 +26,7 @@ cat > /var/vcap/sys/run/cf.crt <<EOF
 EOF
 export SSL_CERT_FILE=/var/vcap/sys/run/cf.crt
 <% end -%>
-CF_SKIP_SSL_VALIDATION=<%= esc(p("cf.skip_ssl_validation")) %>
+CF_SKIP_SSL_VALIDATION=<%= esc(p("cf.skip_ssl_validation") ? "yes" : "") %>
 
 <%
   broker_url = p("servicebroker.url", nil)
@@ -62,17 +62,13 @@ function createOrUpdateServiceBroker() {
 }
 
 echo "CF_API_URL=${CF_API_URL}"
-echo "CF_SKIP_SSL_VALIDATION=${CF_SKIP_SSL_VALIDATION}"
+echo "CF_SKIP_SSL_VALIDATION=${CF_SKIP_SSL_VALIDATION:-no}"
 echo "CF_ADMIN_USERNAME=${CF_ADMIN_USERNAME}"
 echo "BROKER_NAME=${BROKER_NAME}"
 echo "BROKER_URL=${BROKER_URL}"
 echo "BROKER_USERNAME=${BROKER_USERNAME}"
 
-if [[ ${CF_SKIP_SSL_VALIDATION} == "true" ]]; then
-  cf api "${CF_API_URL}" --skip-ssl-validation
-else
-  cf api "${CF_API_URL}"
-fi
+cf api "${CF_API_URL}" ${CF_SKIP_SSL_VALIDATION:+"--skip-ssl-validation"}
 
 cf auth "${CF_ADMIN_USERNAME}" "${CF_ADMIN_PASSWORD}"
 
