@@ -19,6 +19,9 @@ properties:
   servicebroker.url:
     description: 'URL of broker to register'
     example: https://my-broker.system.domain
+  servicebroker.skip_ssl_validation:
+    description: 'Skip SSL validation when connecting to the Service Broker'
+    default: false
   servicebroker.name:
     description: 'Name of broker when registering/deregistering'
   servicebroker.username:

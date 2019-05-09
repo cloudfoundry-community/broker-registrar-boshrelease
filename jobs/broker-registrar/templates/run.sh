@@ -30,6 +30,7 @@ CF_SKIP_SSL_VALIDATION=<%= esc(p("cf.skip_ssl_validation") ? "yes" : "") %>
 
 <%
   broker_url = p("servicebroker.url", nil)
+  broker_skip_ssl_validation = p("servicebroker.skip_ssl_validation", nil)
   broker_name = p("servicebroker.name", nil)
   broker_username = p("servicebroker.username", nil)
   broker_password = p("servicebroker.password", nil)
@@ -38,6 +39,7 @@ CF_SKIP_SSL_VALIDATION=<%= esc(p("cf.skip_ssl_validation") ? "yes" : "") %>
     external_host = broker.p("external_host", "#{broker.instances.first.address}:#{broker.p("port")}")
     protocol      = broker.p("protocol", broker.p("ssl_enabled", false) ? "https" : "http")
     broker_url  ||= "#{protocol}://#{external_host}"
+    broker_skip_ssl_validation ||= broker.p("skip_ssl_validation")
     broker_name ||= broker.p("name")
     broker_username ||= broker.p("username")
     broker_password ||= broker.p("password")
@@ -45,6 +47,7 @@ CF_SKIP_SSL_VALIDATION=<%= esc(p("cf.skip_ssl_validation") ? "yes" : "") %>
 %>
 BROKER_NAME=<%= esc(broker_name) %>
 BROKER_URL=<%= esc(broker_url) %>
+BROKER_SKIP_SSL_VALIDATION=<%= esc(broker_skip_ssl_validation ? "yes" : "") %>
 BROKER_USERNAME=<%= esc(broker_username) %>
 BROKER_PASSWORD=<%= esc(broker_password) %>
 
@@ -76,7 +79,7 @@ createOrUpdateServiceBroker
 
 cf service-access
 
-service_names=($(curl -s -H "X-Broker-Api-Version: 2.10" -u "${BROKER_USERNAME}:${BROKER_PASSWORD}" "${BROKER_URL}/v2/catalog" | jq -r ".services[].name"))
+service_names=($(curl ${BROKER_SKIP_SSL_VALIDATION:+"-k"} -s -H "X-Broker-Api-Version: 2.10" -u "${BROKER_USERNAME}:${BROKER_PASSWORD}" "${BROKER_URL}/v2/catalog" | jq -r ".services[].name"))
 for service_name in "${service_names[@]}"; do
   cf enable-service-access "${service_name}"
 done
