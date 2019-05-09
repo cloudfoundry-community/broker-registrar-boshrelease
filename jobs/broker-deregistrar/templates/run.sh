@@ -13,7 +13,7 @@ exec 2>&1
 export PATH=$PATH:/var/vcap/packages/jq/bin
 export PATH=$PATH:/var/vcap/packages/cf-cli/bin
 
-set -eo pipefail -u
+set -eo pipefail
 
 <% cf = nil; if_link("cf-admin-user") { |link| cf = link } -%>
 CF_API_URL=<%= esc(cf ? cf.p("api_url") : p("cf.api_url")) %>
