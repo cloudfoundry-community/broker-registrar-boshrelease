@@ -18,11 +18,11 @@ meta:
     username: ((bosh-lite-client))
     password: ((bosh-lite-client-secret))
     cf:
-      deployment_name: (( vault "secret/bosh-lites/lite49/cf:deployment_name" ))
-      api_url:         (( vault "secret/bosh-lites/lite49/cf:api_url" ))
-      admin_username:  admin
-      admin_password:  (( vault "secret/bosh-lites/lite49/cf:admin_password" ))
-      system_domain:   (( vault "secret/bosh-lites/lite49/cf:system_domain" ))
+      deployment_name: ((bosh-lite-cf-deployment-name))
+      api_url:         ((bosh-lite-cf-api-url))
+      admin_username:  ((bosh-lite-cf-admin-username))
+      admin_password:  ((bosh-lite-cf-admin-password))
+      system_domain:   ((bosh-lite-cf-system-domain))
       servicebroker_deployment: testflight-docker-broker
 
   manifest:
