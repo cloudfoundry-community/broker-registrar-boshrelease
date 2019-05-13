@@ -39,7 +39,7 @@ CF_SKIP_SSL_VALIDATION=<%= esc(p("cf.skip_ssl_validation") ? "yes" : "") %>
     external_host = broker.p("external_host", "#{broker.instances.first.address}:#{broker.p("port")}")
     protocol      = broker.p("protocol", broker.p("ssl_enabled", false) ? "https" : "http")
     broker_url  ||= "#{protocol}://#{external_host}"
-    broker_skip_ssl_validation ||= broker.p("skip_ssl_validation")
+    broker_skip_ssl_validation ||= broker.p("skip_ssl_validation", false)
     broker_name ||= broker.p("name")
     broker_username ||= broker.p("username")
     broker_password ||= broker.p("password")
