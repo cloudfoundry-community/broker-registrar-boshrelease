@@ -57,9 +57,9 @@ update:
 
 releases:
 - name: broker-registrar
-  sha1: bbeeaf168cb20c097e379cbda7b766cba13dadb0
+  sha1: 149f1229dfe26a77494fa8d32396b092412ebcc8
   stemcell:
     os: ubuntu-xenial
-    version: "250.48"
-  url: https://s3.amazonaws.com/broker-registrar-boshrelease/compiled-releases/broker-registrar/broker-registrar-3.5.1-ubuntu-xenial-250.48-20190521-000834-012148177-20190521000834.tgz
+    version: "456.3"
+  url: https://s3.amazonaws.com/broker-registrar-boshrelease/compiled-releases/broker-registrar/broker-registrar-3.5.1-ubuntu-xenial-456.3-20190815-183402-014154214-20190815183402.tgz
   version: 3.5.1
