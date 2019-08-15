@@ -12,11 +12,12 @@ meta:
     email:  ((git-commit-email))
     name:   ((git-commit-name))
 
-  bosh-lite:
-    target:   ((bosh-lite-environment))
-    cacert:   ((bosh-lite-ca-cert))
-    username: ((bosh-lite-client))
-    password: ((bosh-lite-client-secret))
+  bosh:
+    # target:   ((bosh-lite-environment))
+    # cacert:   ((bosh-lite-ca-cert))
+    # username: ((bosh-lite-client))
+    # password: ((bosh-lite-client-secret))
+    # Currently CI is running just to cut updated compiled releases
     cf:
       deployment_name: ((bosh-lite-cf-deployment-name))
       api_url:         ((bosh-lite-cf-api-url))
@@ -27,11 +28,11 @@ meta:
 
   manifest:
     vars: (( concat
-      "\ncf-api-url=" meta.bosh-lite.cf.api_url
-      "\ncf-admin-username=" meta.bosh-lite.cf.admin_username
-      "\ncf-admin-password=" meta.bosh-lite.cf.admin_password
+      "\ncf-api-url=" meta.bosh.cf.api_url
+      "\ncf-admin-username=" meta.bosh.cf.admin_username
+      "\ncf-admin-password=" meta.bosh.cf.admin_password
       "\ncf-skip-ssl-validation=true"
-      "\nservicebroker-deployment=" meta.bosh-lite.cf.servicebroker_deployment ))
+      "\nservicebroker-deployment=" meta.bosh.cf.servicebroker_deployment ))
 
   aws:
     bucket:      (( grab meta.pipeline ))
