@@ -46,7 +46,7 @@ instance_groups:
 stemcells:
 - alias: default
   os: ubuntu-xenial
-  version: 250.latest
+  version: latest
 
 update:
   canaries: 0
