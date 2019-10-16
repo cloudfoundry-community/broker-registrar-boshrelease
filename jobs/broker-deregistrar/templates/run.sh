@@ -47,7 +47,7 @@ BROKER_GUID=$(cf curl "/v2/service_brokers?q=name:${BROKER_NAME}" | jq -r ".reso
 SERVICE_NAMES=($(cf curl "/v2/services?q=service_broker_guid:${BROKER_GUID}" | jq -r ".resources[].entity.label"))
 
 for service_name in "${SERVICE_NAMES[@]}"; do
-  cf purge-service-offering "${service_name}" -f
+  cf purge-service-offering -b "${BROKER_NAME}" "${service_name}" -f
 done
 
 cf delete-service-broker "${BROKER_NAME}" -f
