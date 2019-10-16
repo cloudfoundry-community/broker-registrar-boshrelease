@@ -81,7 +81,7 @@ cf service-access
 
 service_names=($(curl ${BROKER_SKIP_SSL_VALIDATION:+"-k"} -s -H "X-Broker-Api-Version: 2.10" -u "${BROKER_USERNAME}:${BROKER_PASSWORD}" "${BROKER_URL}/v2/catalog" | jq -r ".services[].name"))
 for service_name in "${service_names[@]}"; do
-  cf enable-service-access "${service_name}"
+  cf enable-service-access -b "${BROKER_NAME}" "${service_name}"
 done
 
 cf service-access
