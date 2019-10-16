@@ -57,9 +57,9 @@ update:
 
 releases:
 - name: broker-registrar
-  sha1: 9581f764b666925a6be5793d5bd31cc118da845b
+  sha1: 9c4b7da3cc343febcfe40f833378747324b88dae
   stemcell:
     os: ubuntu-xenial
-    version: "456.3"
-  url: https://github.com/cloudfoundry-community/broker-registrar-boshrelease/releases/download/v3.6.0/broker-registrar-3.6.0.tgz
+    version: "456.30"
+  url: https://s3.amazonaws.com/broker-registrar-boshrelease/compiled-releases/broker-registrar/broker-registrar-3.6.0-ubuntu-xenial-456.30-20191016-232548-294068115-20191016232548.tgz
   version: 3.6.0
